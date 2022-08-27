@@ -4,7 +4,7 @@
   need_reply: true
   auto_retry_time: 
   folder: 
-  answer: Enter your message text rrason why mute
+  answer: Enter your message text reason why mute
   keyboard: 
   aliases: 
 CMD*/
