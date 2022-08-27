@@ -14,6 +14,7 @@ Features command for admininstration
 3. */free_adTag* - set free adtag
 4. */paid_adTag* - set paid adtag
 5. */reset* - reset all
+6. */reason* - reason sending links
   ANSWER
   keyboard: 
   aliases: 
