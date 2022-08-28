@@ -73,7 +73,10 @@ if (chat.chat_type !== "private") {
           chat_id: current_chat_id,
           user_id: tgID
         })
-        Bot.sendMessage(Valid_name + " has been mute\n*Reason*: " + reason)
+        Api.sendMessage({
+        text:Valid_name + " has been mute\n*Reason*: " + reason,
+        parse_mode:"html"
+       })
       }
       //delete message link
 
