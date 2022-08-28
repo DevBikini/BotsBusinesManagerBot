@@ -32,70 +32,78 @@ if (chat.chat_type !== "private") {
     list: {}
   })
   if (Free_adtag) {
-    if (Free_adtag.includes(message)) {
-      //free adtag
-      return
+    for (var index in Free_adtag) {
+      if (message.includes(Free_adtag[index])) {
+        //free adtag
+        return
+      }
     }
   }
   if (adTag) {
-    if (adTag.includes(message)) {
-      //valid Adtag run
-      for (var index in adTagOwners.list) {
-        if (adTagOwners.list[index] == tgID) {
-          //owner of adtag run
-          return
+    for (var index in adTag) {
+      if (message.includes(adTag[index])) {
+        //valid Adtag run
+        for (var index in adTagOwners.list) {
+          if (adTagOwners.list[index] == tgID) {
+            //owner of adtag run
+            return
+          }
         }
       }
     }
   }
   var detect_Link = Bot.getProperty("detect_Links" + current_chat_id)
   if (detect_Link) {
-    if (detect_Link.includes(message)) {
-      var my_warn = Bot.getProperty("warn" + current_chat_id, {
-        list: {}
-      })
-      var Reason = Bot.getProperty("Reason" + current_chat_id)
-      if (Reason) {
-        var reason = Reason
-      } else {
-        var reason = "Please. Use (valid AdTag) and dont use (other AdTag)"
-      }
-      if (!my_warn[tgID]) {
-        var warns = 1
-      } else {
-        var warns = my_warn[tgID] + 1
-      }
-      if (warns > 2) {
-        //reset warn
-        my_warn[tgID] = 0
-        Bot.setProperty("warn" + current_chat_id, my_warn, "json")
-        Api.restrictChatMember({
-          chat_id: current_chat_id,
-          user_id: tgID
+    for (var index in detect_Link) {
+      if (message.includes(detect_Link[index])) {
+        var my_warn = Bot.getProperty("warn" + current_chat_id, {
+          list: {}
         })
-        Api.sendMessage({
-        text:Valid_name + " has been mute\n*Reason*: " + reason,
-        parse_mode:"html"
-       })
-      }
-      //delete message link
+        var Reason = Bot.getProperty("Reason" + current_chat_id)
+        if (Reason) {
+          var reason = Reason
+        } else {
+          var reason = "Please. Use (valid AdTag) and dont use (other AdTag)"
+        }
+        if (!my_warn[tgID]) {
+          var warns = 1
+        } else {
+          var warns = my_warn[tgID] + 1
+        }
+        if (warns > 2) {
+          //reset warn
+          my_warn[tgID] = 0
+          Bot.setProperty("warn" + current_chat_id, my_warn, "json")
+          Api.restrictChatMember({
+            chat_id: current_chat_id,
+            user_id: tgID
+          })
+          Api.sendMessage({
+            text: Valid_name + " has been mute\n<b>Reason</b>: " + reason,
+            parse_mode: "html"
+          })
+          return
+        }
+        //delete message link
 
-      Api.sendMessage({
-        text:
-          Valid_name +
-          " has been warned " +
-          warns +
-          " / 3\n<b>Reason</b>: " +
-          reason,
-        parse_mode: "html"
-      })
-      Api.deleteMessage({
-        chat_id: current_chat_id,
-        message_id: request.message_id
-      })
-      //add warn
-      my_warn[tgID] = warns
-      Bot.setProperty("warn" + current_chat_id, my_warn, "json")
+        Api.sendMessage({
+          text:
+            Valid_name +
+            " has been warned " +
+            warns +
+            " / 3\n<b>Reason</b>: " +
+            reason,
+          parse_mode: "html"
+        })
+        Api.deleteMessage({
+          chat_id: current_chat_id,
+          message_id: request.message_id
+        })
+        //add warn
+        my_warn[tgID] = warns
+        Bot.setProperty("warn" + current_chat_id, my_warn, "json")
+      }
     }
   }
 }
+
