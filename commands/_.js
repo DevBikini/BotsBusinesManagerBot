@@ -82,6 +82,10 @@ if (chat.chat_type !== "private") {
             text: Valid_name + " has been mute\n<b>Reason</b>: " + reason,
             parse_mode: "html"
           })
+Api.deleteMessage({
+          chat_id: current_chat_id,
+          message_id: request.message_id
+        })
           return
         }
         //delete message link
