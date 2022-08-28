@@ -10,12 +10,12 @@
 CMD*/
 
 if (request.sender_chat && request.sender_chat.type == "channel") {
-//this is for channel
+  //this is for channel
   return
 }
 //reload to get list admininstrations
 if (chat.chat_type !== "private") {
-  var current_chat_id = chat.chatid
+  var current_chat_id = request.chat.id
   var Valid_name = Libs.commonLib.getNameFor(user)
   var admininstration = Bot.getProperty("admininstrations" + current_chat_id, {
     list: {}
@@ -31,11 +31,13 @@ if (chat.chat_type !== "private") {
   var adTagOwners = Bot.getProperty("adTags-owner" + current_chat_id, {
     list: {}
   })
-  if (adTag | Free_adtag) {
+  if (Free_adtag) {
     if (Free_adtag.includes(message)) {
       //free adtag
       return
     }
+  }
+  if (adTag) {
     if (adTag.includes(message)) {
       //valid Adtag run
       for (var index in adTagOwners.list) {
@@ -58,8 +60,12 @@ if (chat.chat_type !== "private") {
       } else {
         var reason = "Please. Use (valid AdTag) and dont use (other AdTag)"
       }
-      var new_warn = my_warn[tgID] + 1
-      if (my_warn[tgID] > 2) {
+      if (!my_warn[tgID]) {
+        var warns = 1
+      } else {
+        var warns = my_warn[tgID] + 1
+      }
+      if (warns > 2) {
         //reset warn
         my_warn[tgID] = 0
         Bot.setProperty("warn" + current_chat_id, my_warn, "json")
@@ -70,20 +76,23 @@ if (chat.chat_type !== "private") {
         Bot.sendMessage(Valid_name + " has been mute\n*Reason*: " + reason)
       }
       //delete message link
-      Bot.sendMessage(
-        Valid_name +
+
+      Api.sendMessage({
+        text:
+          Valid_name +
           " has been warned " +
-          new_warn +
-          " / 3\n*Reason*: " +
-          reason
-      )
+          warns +
+          " / 3\n<b>Reason</b>: " +
+          reason,
+        parse_mode: "html"
+      })
       Api.deleteMessage({
         chat_id: current_chat_id,
         message_id: request.message_id
       })
       //add warn
-      my_warn[tgID] = new_warn
-      Bot.setProperty("warn" + current_chat_id, my_warn_at, "json")
+      my_warn[tgID] = warns
+      Bot.setProperty("warn" + current_chat_id, my_warn, "json")
     }
   }
 }
