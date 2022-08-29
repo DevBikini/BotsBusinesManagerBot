@@ -51,16 +51,8 @@ if (!params) {
       }
     }
   }
-  if (!co_admin) {
-    var co_founder = ""
-  } else {
-    var co_founder = "\n\n⚜️ <b>Co-founder</b>" + co_admin
-  }
-  if (!admin) {
-    var admins = ""
-  } else {
-    var admins = "\n\n👮🏼 <b>Admin</b> " + admin
-  }
+    var co_founder = get_co('\n\n⚜️ <b>Co-founder</b>',co_admin)
+    var admins = get_co('\n\n👮🏼 <b>Admin</b>',admin)
   Api.sendMessage({
     text:
       "<b>GROUP STAFF\n\n👑 Founder</b>\n └ " +
@@ -100,4 +92,12 @@ if (options.result[ind].custom_title) {
         return " » " + options.result[ind].custom_title
       } 
   return " » Admin"
+}
+//Co.founder and admin
+function Get_co(text,name){
+if (!name) {
+    return  ""
+  } 
+    return text + name
+  
 }
