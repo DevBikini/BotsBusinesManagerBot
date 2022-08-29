@@ -33,8 +33,8 @@ if (params && admininstration.list[tgID]) {
     //set owner
     adTagOwners.list[adTag] = owner
     Bot.setProperty("adTags-owner" + current_chat_id, adTagOwners, "json")
-    Bot.sendMessage("Paid Tag : " + adTag + "\nOwnership : " + owner)
-  } else {
+  return Bot.sendMessage("Paid Tag : " + adTag + "\nOwnership : " + owner) 
+  }
     Bot.sendMessage("paid Tag : " + adTag + "\nhas been delete")
     //delete ownership
     adTagOwners.list[adTag] = Bot.setProperty(
@@ -42,7 +42,6 @@ if (params && admininstration.list[tgID]) {
       adTagOwners,
       "json"
     )
-  }
 } else {
   Bot.sendMessage(
     "*Hey, use /paid_adTag [adTag name] [user telegramid]\nExample: /free_adTag #Love 123456789*"
