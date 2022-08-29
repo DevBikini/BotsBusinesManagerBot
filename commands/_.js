@@ -62,17 +62,16 @@ if (chat.chat_type !== "private") {
   function getReason(){
         var text_reason = Bot.getProperty("Reason" + current_chat_id)
         if (text_reason) { return text_reason }
-
        return "Please. Use (valid AdTag) and dont use (other AdTag)"
-}
+       }
         var reason = GetReason()
-    function MyWarn(){
+  function MyWarn(){
       if (!my_warn[tgID]) {
           return 1
         } 
         return my_warn[tgID] + 1
        }
-        var warn = MyWarn()
+        var warns = MyWarn()
         if (warns > 2) {
           //reset warn
           my_warn[tgID] = 0
@@ -85,7 +84,7 @@ if (chat.chat_type !== "private") {
             text: Valid_name + " has been mute\n<b>Reason</b>: " + reason,
             parse_mode: "html"
           })
-Api.deleteMessage({
+         Api.deleteMessage({
           chat_id: current_chat_id,
           message_id: request.message_id
         })
