@@ -59,12 +59,13 @@ if (chat.chat_type !== "private") {
         var my_warn = Bot.getProperty("warn" + current_chat_id, {
           list: {}
         })
-        var Reason = Bot.getProperty("Reason" + current_chat_id)
-        if (Reason) {
-          var reason = Reason
-        } else {
-          var reason = "Please. Use (valid AdTag) and dont use (other AdTag)"
-        }
+  function getReason(){
+        var text_reason = Bot.getProperty("Reason" + current_chat_id)
+        if (text_reason) { return text_reason }
+
+       return "Please. Use (valid AdTag) and dont use (other AdTag)"
+}
+        var reason = GetReason()
         if (!my_warn[tgID]) {
           var warns = 1
         } else {
