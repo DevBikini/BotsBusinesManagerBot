@@ -94,7 +94,7 @@ if (options.result[ind].custom_title) {
   return " » Admin"
 }
 //Co.founder and admin
-function Get_co(text,name){
+function get_co(text,name){
 if (!name) {
     return  ""
   } 
