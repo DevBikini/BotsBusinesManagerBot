@@ -19,7 +19,7 @@ var admininstration = Bot.getProperty("admininstrations" + current_chat_id, {
   list: {}
 })
 var tgID = user.telegramid
-if (admininstration.list[tgID]) {
+if (admininstration.list[tgID]==tgID) {
   Bot.setProperty("detect_Links" + current_chat_id, "", "string")
   Bot.setProperty("adTags" + current_chat_id, "", "string")
   Bot.setProperty("FREE-adTags" + current_chat_id, "", "string")
