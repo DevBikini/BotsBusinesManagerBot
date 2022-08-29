@@ -66,11 +66,13 @@ if (chat.chat_type !== "private") {
        return "Please. Use (valid AdTag) and dont use (other AdTag)"
 }
         var reason = GetReason()
-        if (!my_warn[tgID]) {
-          var warns = 1
-        } else {
-          var warns = my_warn[tgID] + 1
-        }
+    function MyWarn(){
+      if (!my_warn[tgID]) {
+          return 1
+        } 
+        return my_warn[tgID] + 1
+       }
+        var warn = MyWarn()
         if (warns > 2) {
           //reset warn
           my_warn[tgID] = 0
@@ -90,7 +92,6 @@ Api.deleteMessage({
           return
         }
         //delete message link
-
         Api.sendMessage({
           text:
             Valid_name +
