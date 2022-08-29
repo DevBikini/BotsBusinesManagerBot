@@ -32,40 +32,17 @@ if (!params) {
     add.list[user_id] = user_id
     Bot.setProperty("admininstrations" + current_chat_id, add, "json")
     var user_first_name = options.result[ind].user.first_name
-    if (!user_first_name) {
-      var user_last_name = options.result[ind].user.last_name
-      if (user_last_name) {
-        var realname = options.result[ind].user.last_name
-      } else {
-        var realname = "Deleted Account"
-      }
-    } else {
-      var realname = options.result[ind].user.first_name
-    }
+    var realname = GetRealName()
     var user_username = options.result[ind].user.username
-    if (!user_username) {
-      var user_name =
-        "<a href='tg://user?id=" +
-        options.result[ind].user.id +
-        "'>" +
-        realname +
-        "</a>"
-    } else {
-      var user_name = "@" + options.result[ind].user.username
-    }
+    var user_name = Getuser_name()
     //creator
     if (options.result[ind].status == "creator") {
       var owner = owner + user_name
     }
-    //find co founder and admin👇
+    //find co founder and admin
     if (options.result[ind].status == "administrator") {
-      //create title 👇
-      if (options.result[ind].custom_title) {
-        var title = " » " + options.result[ind].custom_title
-      } else {
-        var title = " » Admin"
-      }
-      //end title 👆
+      //create title 
+      var title = GetTitle() 
       var can_promote_members = options.result[ind].can_promote_members
       if (can_promote_members) {
         var co_admin = co_admin + "\n ├ " + user_name + title
@@ -73,7 +50,6 @@ if (!params) {
         var admin = admin + "\n ├ " + user_name + title
       }
     }
-    //end co founder and admin 👆
   }
   if (!co_admin) {
     var co_founder = ""
@@ -95,4 +71,33 @@ if (!params) {
     parse_mode: "html"
   })
 }
-
+//Function
+function GetRealName(){
+if (user_first_name) {
+return options.result[ind].user.first_name
+}
+      var user_last_name = options.result[ind].user.last_name
+      if (user_last_name) {
+        return options.result[ind].user.last_name
+      }
+        return "Deleted Account"
+}
+//Get user name
+function Getuser_name(){
+if (!user_username) {
+      return 
+        "<a href='tg://user?id=" +
+        options.result[ind].user.id +
+        "'>" +
+        realname +
+        "</a>"
+    } 
+      return "@" + options.result[ind].user.username
+}
+//Get title
+function GetTitle(){
+if (options.result[ind].custom_title) {
+        return " » " + options.result[ind].custom_title
+      } 
+  return " » Admin"
+}
